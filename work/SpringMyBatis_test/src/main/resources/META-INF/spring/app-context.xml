@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<description>Example configuration to get you started.</description>
+
+	<context:component-scan base-package="com.exe.springmybatis" />
+
+ 	<!--  제어의역전으로 db관련 모두끌고가서 SetSessionTemplate메소드에 넣음 -->
+	<bean id="customDAO" class="com.exe.springmybatis.CustomDAO">
+		<property name="sessionTemplate" ref="sessionTemplate"/> <!-- SqlSessionTemplate sessiontemplate -->	
+	</bean>
+	
+	<!-- SqlSessionTemplate는 impl같은곳? insert delete 모아놓음..구현되어있음  -->
+	<bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sessionFactory"/>
+	</bean>
+	
+	<!-- 마이바티스 sql문들 + db연결  -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:/com/exe/springmybatis/mybatis-config.xml"/>
+		<property name="dataSource" ref="dataSoruce"/>
+	</bean>
+	
+</beans>

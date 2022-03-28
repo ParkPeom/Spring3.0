@@ -1,0 +1,10 @@
+package com.exe.springdi4;
+
+import org.springframework.stereotype.Component;
+
+@Component("messageservice")
+public class MyMessageService {
+	
+	
+	
+}

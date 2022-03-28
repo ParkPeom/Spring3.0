@@ -1,0 +1,8 @@
+package com.exe.springdi3;
+
+public class MessageKr implements Message {
+
+	public void sayHello(String name) {
+		System.out.println("¾È³ç", " + name);
+	}
+}

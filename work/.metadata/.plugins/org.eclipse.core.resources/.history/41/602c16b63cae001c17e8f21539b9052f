@@ -1,0 +1,9 @@
+package com.exe.aop;
+
+public class MyBeforeAdvice {
+	
+	public void beforeMethodCall() {
+		
+		System.out.println("메소드 실행전...");
+	}
+}

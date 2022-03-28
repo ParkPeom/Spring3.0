@@ -1,0 +1,28 @@
+package com.exe.springdi4;
+
+import org.springframework.stereotype.Component;
+
+// 어노테이션
+
+@Component 
+public class ServiceConsumer {
+	
+	// 인터페이스
+	MessageService ms; 
+	TimeService ts; 
+	JobService js;
+	
+	
+	public void consumerService() {
+		
+	
+		String message = ms.getMessage();
+		System.out.println(message);
+		
+		String time = ts.getTimeString();
+		System.out.println(time);
+		
+		js.getJob();
+	
+	}
+}

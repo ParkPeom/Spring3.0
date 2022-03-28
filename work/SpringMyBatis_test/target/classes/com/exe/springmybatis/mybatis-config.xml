@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- mapper 에는 insert,delete가 들어가있다. -->
+<!-- 이클립스에서 sql문 모아놓은거랑 같은기능 -->
+<!-- 마이바티스 특징은 CommDAO를 구현한 impl 두개없어도됨 없애고 마이바티스에 내장시킴-->
+<configuration> 
+	<mappers>
+		<mapper resource="com/exe/mapper/customMapper.xml"/>
+	</mappers>
+</configuration>

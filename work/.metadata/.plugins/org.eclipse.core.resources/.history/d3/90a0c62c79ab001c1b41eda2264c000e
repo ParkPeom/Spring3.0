@@ -1,0 +1,31 @@
+package com.exe.springdi4;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+// 어노테이션
+// @Component : 객체생성 <bean id="serviceConsumer" class="com.exe.springdi4.ServiceConsumer"/>
+@Component("serviceConsumer")
+public class ServiceConsumer {
+
+	MessageService ms; // 초기화 하고 
+
+
+	TimeService ts;
+	
+
+	JobService js; //인터페이스에 클래스 MyJobService 를 찾아옴
+	
+	// this.js = new MyJobService();
+	public void consumerService() {
+		
+		String message = ms.getMessage();
+		System.out.println(message);
+		
+		String time = ts.getTimeString();
+		System.out.println(time);
+		
+		js.getJob();
+	}
+}	

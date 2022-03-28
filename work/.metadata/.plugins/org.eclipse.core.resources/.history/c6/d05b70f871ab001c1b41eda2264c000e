@@ -1,0 +1,13 @@
+package com.exe.springdi4;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("messageservice")
+@Scope(value="prototype")
+public class MyMessageService implements MessageService {
+
+	public String getMessage() {
+		return "방가방가";
+	}
+}

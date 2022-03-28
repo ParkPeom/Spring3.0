@@ -1,0 +1,24 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" pageEncoding="UTF-8" %>
+<html>
+<head>
+	<title>Home</title>
+</head>
+<body>
+
+<h2>spring MVC Controller Test</h2>
+							<!-- 무조건 앞에 / 쓰면 안된다. -->
+<h3>1. 안녕하세요 GET방식입니다<a href="test/param.action?name=suzi
+&phone=010-333-2222&email=zkokopo@naver.com">GET 방식 테스트</a></h3>
+
+<form action="love" method="POST">
+
+이름:<input type="text" name="name"/><br/>
+이름:<input type="text" name="name"/><br/>
+이름:<input type="text" name="name"/><br/>
+
+<input type="submit" value="전송"/>
+
+</form>
+</body>
+</html>

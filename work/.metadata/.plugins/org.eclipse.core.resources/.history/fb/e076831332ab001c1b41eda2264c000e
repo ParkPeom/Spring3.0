@@ -1,0 +1,17 @@
+package com.exe.springdi4;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+
+// Scope : serviceConsumer에서 @AutoWired을 자동으로 읽어온다.
+// 다른곳에서 messageService을 주면 객체 충돌남 .com를 써준다.
+@Component("messageService") 
+@Scope(value="prototype")
+public class MyMessageService implements MessageService {
+
+	public String getMessage() {
+		return "안녕 방가방가!!!";
+	}
+	
+}

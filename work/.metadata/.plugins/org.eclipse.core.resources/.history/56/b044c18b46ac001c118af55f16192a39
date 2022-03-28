@@ -1,0 +1,20 @@
+package com.exe.springJdbcTemplate;
+
+import java.util.List;
+
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+public class CustomMain {
+
+	public static void main(String[] args) {
+		
+		
+		GenericXmlApplicationContext context
+			= new GenericXmlApplicationContext("app-context.xml");
+		
+		
+		customDAO dao = (customDAO)context.getBean("customDAO");
+	
+	
+	}
+}

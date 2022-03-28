@@ -1,0 +1,51 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	https://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context 
+	https://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<description>Example configuration to get you started.</description>
+	<!-- 특정패키지안에서 사용 -->	
+	<context:component-scan base-package="com.exe.springJdbcTemplate" />
+
+	<!-- dao의 의존성 주입 IOC 기능 제어의 역전-->
+	<bean id="customDAO" class="com.exe.springJdbcTemplate.CustomDAO">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- customDAO2는 jdbcTemplate,namedJdbcTemplate 사용할것임  -->
+	<bean id="customDAO2" class="com.exe.springJdbcTemplate.CustomDAO2">
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+		<property name="namedJdbcTemplate" ref="namedParameterJdbcTemplate"></property>
+	</bean>
+
+	<!-- spring의 jdbc -->
+	<!-- 생성자에 jdbc를 넣어줌  -->
+	<!-- CustomDAO2에 넘김 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+	
+	
+	<!-- 스프링의 또다른 jdbc템플릿 이름을 파라미터로 가지는 jdbc 템플릿 -->	
+	<bean id="namedParameterJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+	
+	<!-- 스프링 바깥기능은 스프링빈 객체로 생성해줘야함 -->
+	<!-- 위에서 선언해줘서 p 를 사용하여 db연결 -->
+	<!-- jdbc -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:xe"
+		p:username="suzi"
+		p:password="a123"/>	
+</beans>

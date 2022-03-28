@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 https://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<description>Example configuration to get you started.</description>
+	<!-- 의존성 주입 이란?  의존성을 약하게 만듬 -->
+	
+	<!-- 지원하는 패키지 -->
+	<context:component-scan base-package="*" />  <!-- * 모두 지원 -->
+
+	<!-- 객체 생성 -->
+	<!-- 클래스 MessageKr으로 message로 객체 생성 -->
+	<bean id="message" class="com.exe.springdi3.MessageKr"/> 
+	
+
+	<!--  생성자를 통한 의존성 주입 -->
+	<!--  생성자를 가지고 있어서 매개변수를 줘야하는데 MyMessageService가 필요로 한다. -->
+	<!-- ServiceConstumer 가지고 있는 생성자에 MyMessageService의 객체 messageService를 넘겨준다.  -->
+	<!-- 제어의 역전(IOC/DI) : serviceConsumer만 가져다가 쓰면 MyMessageService는 딸려온다 -->
+	<bean id="serviceConsumer" class="com.exe.springdi4.ServiceConsumer"
+	autowire="byName"> <!-- 이름으로 자동연결 , 생성자에서는 x 메소드에서 property 생략 해도 set자동으로 찾아감 -->
+	
+		<constructor-arg ref="messageService"/> 
+			
+		<!-- 메소드 set를 통한 의존성 주입 -->
+		<!-- 메소드는 property -->
+		<!-- class는 왜 name이 없나 ? 생성자는 클래스의 이름과 같아서 -->
+		<!-- name: setTimeService(MyTimeservice timeService) -->
+		<!-- timeService 객체 생성후  메소드의 매개변수로 넘긴다. -->
+		<property name="timeService" ref="timeService"></property> 
+		<!-- <property name="jobService" ref="jobService"></property>  --> <!-- 메서드에서만 autowrie 로 스프링에 맡기는데 MyJobService를 생성했으면 자동으로 setJobService 찾아가서 초기화 시킨다.-->
+	</bean>
+	
+	<!-- 객체 생성해야 넘겨줄수있다. -->
+	<!-- autowire : id에 set이름과 똑같이 쓰면 자동으로 찾아감  -->
+	<bean id="messageService" class="com.exe.springdi4.MyMessageService"/>
+	<bean id="timeService" class="com.exe.springdi4.MyTimeService"/>
+	<bean id="jobService" class="com.exe.springdi4.MyJobService"/>
+</beans>

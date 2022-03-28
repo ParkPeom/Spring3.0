@@ -1,0 +1,29 @@
+package com.exe.aop;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+
+public class MyAroundAdvice {
+	
+	// 프로시딩조인포인트
+		public Object aroundMethodCall(ProceedingJoinPoint joinPoint) {
+		
+			Object result = null;
+
+		try {
+		
+			System.out.println("메소드 실행 전(AroundAdvice)...");
+			
+			result = joinPoint.proceed();
+			
+			
+			
+		} catch (Exception e) {
+
+		}	
+		
+	}
+}

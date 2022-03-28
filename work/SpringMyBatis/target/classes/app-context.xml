@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	https://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context 
+	https://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+<!-- context 생성 : 사용자s 정의 문법을 작성하기 위해 다음 작성
+ : xmlns:p="http://www.springframework.org/schema/p" -->
+
+
+	<description>Example configuration to get you started.</description>
+
+	<context:component-scan base-package="com.exe.springmybatis" />
+
+	<!-- dao의 의존성 주입 IOC 기능 제어의 역전-->
+	<!-- propery : 일반적으로 메소드로 초기화작업을 많이 해준다 -->
+	<bean id="customDAO" class="com.exe.springmybatis.CustomDAO">
+		<property name="sessionTemplate" ref="sessionTemplate"></property>
+	</bean>
+	
+	<!--  세션 템플릿 : commdaoImpl과 같은 기능 -->
+	<bean id="sessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sessionFactory"/>
+	</bean>
+	<!--CommonDAO,impl(insert/update~했던것처럼) ex) getReadata 들이 다 담겨있음 -->
+	
+	<!-- mybatis 팩토리가 데이터소스랑-콘피그를 합쳐서 데이터 생성 , configLocation : sql 매퍼를불러옴 -->
+	<!-- 사용할 패키지를 적는다 -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:/com/exe/springmybatis/mybatis-config.xml"/> 
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- 스프링에게 DB의 위치 정보를 알려주는 코딩 작성 -->
+	<!-- 스프링 바깥기능은 스프링빈 객체로 생성해줘야함 -->
+	<!-- jdbc -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:xe"
+		p:username="suzi"
+		p:password="a123"/>			
+</beans>

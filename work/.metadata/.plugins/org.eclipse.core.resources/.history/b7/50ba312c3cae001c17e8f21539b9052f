@@ -1,0 +1,8 @@
+package com.exe.aop;
+
+import org.springframework.stereotype.Component;
+
+@Component("targetA")
+public class TargetA {
+	
+}

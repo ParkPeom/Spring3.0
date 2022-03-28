@@ -1,0 +1,31 @@
+package com.exe.springdi4;
+
+
+// 중간다리
+public class ServiceConsumer {
+	
+	// 인터페이스 선언
+	MessageService ms;
+	TimeService ts;
+	JobService js;
+	
+	
+	// 생성자를 통한 의존성 
+	public ServiceConsumer(MessageService ms) {
+		this.ms = ms;
+	}
+	
+	public void setTimeService(TimeService ts) {
+		this.ts = ts;
+	}
+	
+	public void setJobService(JobService js) {
+		this.js = js;
+	}
+	
+	public void consumerService() {
+		
+		
+	}
+	
+}

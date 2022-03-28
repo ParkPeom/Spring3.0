@@ -1,0 +1,24 @@
+package com.exe.aop;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+
+public Object aroundMethodCall(ProceedingJoinPoint jointPoint) {
+	
+	Object result = null;
+	
+	try {
+		
+		System.out.println("..메소드 정상 실행 전 (AroundAdvice)..");
+		
+		result = jointPoint.proceed();
+		
+		System.out.println("..메소드 정상 실행 후 (AroundAdvice)..");
+		
+		
+		
+	} catch (Throwable e) { //회장나와
+		
+	}
+	
+	return result;
+}

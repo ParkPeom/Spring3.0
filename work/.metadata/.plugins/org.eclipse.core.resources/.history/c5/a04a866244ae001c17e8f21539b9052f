@@ -1,0 +1,26 @@
+package com.exe.aop;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+
+public class MyAroundAdvice {
+	
+	
+	// Object 그 메소드가 어느것을 반환할지 모르므로 
+	// around : before -> 메소드 -> after
+	// 메소드를 실행시켜주는 코딩은 Proceed
+	
+	public Object aroundMethodCall(ProceedingJoinPoint jointPoint) {
+		
+		Object result = null;
+		
+		try {
+			System.out.println("");
+			
+		} catch (Exception e) {
+			
+		}
+		
+	}
+	
+	
+}

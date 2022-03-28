@@ -1,0 +1,15 @@
+package com.exe.aop;
+
+public class MyBeforeAdvice {
+	
+	public void beforeMethodCall() {
+		
+		// 어드바이스 
+		// 메소드가 실행되기전 실행될 코드 
+		System.out.println("메소드 실행전(BeforeAdvice)");
+	
+		
+		
+		
+	}
+}

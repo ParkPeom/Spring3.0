@@ -1,0 +1,8 @@
+package com.exe.springdi4;
+
+import org.springframework.stereotype.Component;
+
+@Component("serviceconsumer")
+public class ServiceConsumer {
+	
+}	

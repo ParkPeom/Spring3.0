@@ -1,0 +1,11 @@
+package com.exe.springmvc_test;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class HomeController {
+	
+	@RequestMapping(value="/",method=RequestMethod.POST)
+	
+}

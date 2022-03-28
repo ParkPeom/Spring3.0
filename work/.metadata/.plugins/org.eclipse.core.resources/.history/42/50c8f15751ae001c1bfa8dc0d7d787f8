@@ -1,0 +1,11 @@
+package com.exe.aop;
+
+public class MyAfterReturnAdvice {
+
+	// 메소드가 실행된 후에
+	public void afterReturnAdvice() {
+		
+		System.out.println("메서드 실행 후");
+		
+	}
+}

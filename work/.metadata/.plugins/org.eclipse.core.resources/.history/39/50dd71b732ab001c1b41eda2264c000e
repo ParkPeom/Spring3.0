@@ -1,0 +1,36 @@
+package com.exe.springdi4;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+// 어노테이션
+// @Component : 객체생성 <bean id="serviceConsumer" class="com.exe.springdi4.ServiceConsumer"
+// 충돌날수있으므로 이름줌
+@Component("serviceConsumer") 
+public class ServiceConsumer {
+	
+	// 인터페이스
+	// @Autowired : 니가 알아서 ms 초기화 해라 
+	@Autowired
+	@Qualifier("messageService") //Qualifier : 이름을 콕 집어서 찾아오라고 명시해준다.
+	MessageService ms; 
+	@Autowired
+	TimeService ts; 
+	@Autowired
+	JobService js;
+	
+	
+	public void consumerService() {
+		
+	
+		String message = ms.getMessage();
+		System.out.println(message);
+		
+		String time = ts.getTimeString();
+		System.out.println(time);
+		
+		js.getJob();
+	
+	}
+}

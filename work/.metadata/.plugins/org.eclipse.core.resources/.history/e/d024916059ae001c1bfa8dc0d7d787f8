@@ -1,0 +1,20 @@
+package com.exe.aop;
+
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+@Aspect  // <aop~</aop>구조로 만듬
+@Component  // 객체 생성
+public class MyBeforeAdvice {
+	
+	public void beforeMethodCall() {
+		
+		// 어드바이스 
+		// 메소드가 실행되기전 실행될 코드 
+		System.out.println("메소드 실행전(BeforeAdvice)");
+	
+		
+		
+		
+	}
+}

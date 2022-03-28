@@ -1,0 +1,6 @@
+package com.exe.aop;
+
+public class MyAfterThrowAdvice {
+	
+	
+}

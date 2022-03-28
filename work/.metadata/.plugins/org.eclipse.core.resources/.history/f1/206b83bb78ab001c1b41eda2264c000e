@@ -1,0 +1,18 @@
+package com.exe.springdi4;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+/*singleton – IoC 컨테이너당 하나의 빈을 리턴
+prototype – 요구가 있을 때 마다 새로운 빈을 만들어 리턴
+request - HTTP request 객체당 하나의 빈을 리턴
+session - HTTP session 당 하나의 빈을 리턴
+globalSession - 전체 모든 세션에 대해 하나의 빈을 리턴*/
+
+@Component("messageservice")
+public class MyMessageService implements MessageService {
+
+	public String getMessage() {
+		return "방가방가";
+	}
+}

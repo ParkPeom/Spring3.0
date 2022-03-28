@@ -1,0 +1,8 @@
+package com.exe.springdi4;
+
+public class MyTimeService implements TimeService {
+		
+	
+	
+	
+}

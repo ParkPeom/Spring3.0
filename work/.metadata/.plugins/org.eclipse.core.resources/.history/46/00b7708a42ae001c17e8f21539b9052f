@@ -1,0 +1,11 @@
+package com.exe.aop;
+
+public class MyAfterAdvice {
+	
+	
+	// 하고싶은 작업
+	
+	public void afterMethodCall() {
+		System.out.println("메소드 실행후(AfterAdvice)");
+	}
+}

@@ -1,0 +1,144 @@
+package com.exe.springmybatis;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.mybatis.spring.SqlSessionTemplate;
+
+
+// jdbc의 단점 똑같은 코딩을 계속 씀
+
+public class CustomDAO {
+	
+	private SqlSessionTemplate sessionTemplate;
+
+	
+	// 의존성 주입 
+	public void setsessionTemplate(SqlSessionTemplate sessionTemplate) {
+		this.sessionTemplate = sessionTemplate;
+	}
+	
+	// DAO 컨넥션필요
+	Connection conn = null;
+	
+	
+	
+	// insert 반환 voide
+	public void insertData(CustomDTO dto) {
+		
+		
+		// 쿼리를 라이브러리에 내장시킴 
+		sessionTemplate.insert("com.exe.custom.insert",dto);
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	// 전체 데이터를 가져옴
+	public List<CustomDTO> getLists() {
+		
+		List<CustomDTO> lists = new ArrayList<CustomDTO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql;
+		
+		try {
+			conn = dataSource.getConnection();
+			sql = "select id,name,age from custom";
+			
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery(); 
+			
+			while(rs.next()) {
+				
+				CustomDTO dto = new CustomDTO();
+				dto.setId(rs.getInt("id"));
+				dto.setName(rs.getString("name"));
+				dto.setAge(rs.getInt("age"));
+				
+				lists.add(dto);
+			}
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return lists;
+	}	
+	
+	// 하나의 데이터를 가져옴
+	public CustomDTO getReadData(int id) {
+		
+		CustomDTO dto = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql;
+		
+		try {
+			conn = dataSource.getConnection();
+			sql = "select id,name,age from custom where id=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, id);
+			
+			rs = pstmt.executeQuery(); 
+			
+			// 하나 나오니까 if문 
+			if(rs.next()) {
+				dto = new CustomDTO();
+				dto.setId(rs.getInt("id"));
+				dto.setName(rs.getString("name"));
+				dto.setAge(rs.getInt("age"));
+			}
+			rs.close();
+			pstmt.close();
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return dto;
+	}	
+		
+	
+	// update는 insert 와 비슷하다
+	public void updateData(CustomDTO dto) {
+
+		sessionTemplate.update("com.exe.custom.update",dto);
+	
+	}
+	
+	
+	// 삭제 
+	public int deleteData(int id) {
+			
+			// psr
+			PreparedStatement pstmt = null;
+			String sql;
+			int result = 0;
+			
+			try {
+				conn = dataSource.getConnection(); // db 연결
+				sql = "delete custom where id=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, id);
+			
+				result = pstmt.executeUpdate();
+				
+				pstmt.close();
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			}	
+			return result;
+		}
+	}

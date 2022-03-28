@@ -1,0 +1,24 @@
+package com.exe.aop;
+
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+public class AopMain {
+
+	public static void main(String[] args) {
+		
+		
+		GenericXmlApplicationContext context = 
+				new GenericXmlApplicationContext("app-context.xml");
+		
+		TargetA ta = (TargetA)context.getBean("targetA"); // @Componet 객체 읽어옴
+		
+		// 특정메소드가 실행되기전에 호출시키기 
+		
+		// beforeMethodCall 이 실행되고 나서 각각의 메소드가 실행됨
+		ta.doSomething1();
+		ta.doSomething2();
+		ta.doAnother1();
+		ta.doAnother2();
+		
+	}
+}

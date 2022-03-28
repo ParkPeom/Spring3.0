@@ -1,0 +1,11 @@
+package com.exe.springdi4;
+
+import org.springframework.stereotype.Component;
+
+@Component("timeService")
+public class MyTimeService implements TimeService {
+	
+	
+	
+	
+}

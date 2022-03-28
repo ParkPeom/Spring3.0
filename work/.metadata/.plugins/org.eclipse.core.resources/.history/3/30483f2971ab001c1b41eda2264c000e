@@ -1,0 +1,22 @@
+package com.exe.springdi4;
+
+import java.text.SimpleDateFormat;
+
+import org.springframework.stereotype.Component;
+
+@Component("timeService")
+public class MyTimeService implements TimeService {
+	
+	
+	public String getTimeString() {
+		
+		
+		SimpleDateFormat sdf = 
+				(SimpleDateFormat)SimpleDateFormat
+				.getDateInstance(SimpleDateFormat.LONG,SimpleDateFormat.LONG);
+		
+		
+		
+	}
+	
+}

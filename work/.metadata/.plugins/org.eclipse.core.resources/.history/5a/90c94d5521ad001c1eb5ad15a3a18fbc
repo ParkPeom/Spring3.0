@@ -1,0 +1,11 @@
+package com.jdbc.util;
+
+public class MyUtil {
+	
+	
+	public int getPageCount(int numPerPage,int dataCount) {
+		
+		
+	}
+	
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 https://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<description>Example configuration to get you started.</description>
+	
+	
+	<!-- 지원하는 패키지 -->
+	<!-- 컨텍스트를 컴포넌트하는 스캔영역? -->
+	<context:component-scan base-package="*"/>
+	
+	<bean id="message" class="com.exe.springdi3.MessageKr"/>
+
+	<bean id="serviceConsumer" class="com.exe.springdi4.ServiceConsumer">
+		<constructor-arg ref="messageService"/> <!-- 생성자에 (MessageService message) -->
+		
+			
+		<property name="timeService" ref="timeService"></property>
+		<property name="jobService" ref="jobService"></property>
+	</bean>
+
+
+	<bean id="messageService" class="com.exe.springdi4.MyMessageService"/>
+	<bean id="timeService" class="com.exe.springdi4.MyTimeService"/>
+	<bean id="jobService" class="com.exe.springdi4.MyJobService"/>
+</beans>

@@ -1,0 +1,6 @@
+package com.exe.aop;
+
+public class MyAfterThrowAdvice {
+	
+	// 에러가 났을때 실행
+}

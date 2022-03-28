@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	https://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context 
+		https://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/aop 
+		https://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<description>Example configuration to get you started.</description>
+
+	<context:component-scan base-package="com.exe.aop" />
+	
+	<bean id="beforeAdvice" class="com.exe.aop.MyBeforeAdvice"/>
+	<bean id="afterAdvice" class="com.exe.aop.MyAfterAdvice"/>
+	<bean id="aroundAdvice" class="com.exe.aop.MyAroundAdvice"></bean>
+	
+	<!-- execution(메소드접근지정자 반환값 패키지.클래스.메소드명(인수)) / 이런식으로 위치를 지정한다. -->
+	<aop:config>
+		<aop:aspect ref="beforeAdvice">
+			<aop:pointcut id="beforePointcut" expression="execution(public void com..aop.*.*(String))" /><!-- 커다란설정 -->
+			<aop:before method="beforMethodCall" pointcut-ref="beforePointcut"/><!-- 정확한 메소드 설정 -->
+		</aop:aspect>
+	</aop:config>
+	
+	<!-- execution(메소드접근지정자 반환값 패키지.클래스.메소드명(인수)) / 이런식으로 위치를 지정한다. -->
+	<!-- execution(* com..aop.*.*(String)) -->
+	
+	
+	<aop:config>
+		<aop:aspect ref="afterAdvice">
+			<aop:pointcut id="afterPointcut" expression="execution(public void com..aop.*.*(String))"/>
+			<aop:after method="afterMethodCall" pointcut-ref="afterPointcut"/>
+		</aop:aspect>
+	</aop:config>
+	
+	
+		<aop:config>
+		<aop:aspect ref="aroundAdvice">
+			<aop:pointcut id="aroundPointcut" expression="execution(public void com..aop.*.*(..))"/>
+			<aop:around method="aroundMethodCall" pointcut-ref="aroundPointcut"/>
+		</aop:aspect>
+	</aop:config>
+
+
+</beans>

@@ -1,0 +1,16 @@
+package com.jdbc.springweb;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+
+import com.jdbc.dao.BoardDAO;
+
+@Controller
+public class BoardController {
+	
+	@Autowired
+	@Qualifier("boardDAO")
+	BoardDAO dao; // 의존성 주입
+	
+}

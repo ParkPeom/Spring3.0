@@ -1,0 +1,26 @@
+package com.exe.springdi4;
+
+
+//중간단계역할
+public class ServiceConsumer {
+	
+	// 인터페이스
+	MessageService ms; // MessageService ms = (MessageService)context.getBean("messageService"); 와 같다 
+	TimeService ts; 
+	JobService js;
+	
+	
+	
+	public void consumerService() {
+		
+	
+		String message = ms.getMessage();
+		System.out.println(message);
+		
+		String time = ts.getTimeString();
+		System.out.println(time);
+		
+		js.getJob();
+	
+	}
+}

@@ -1,0 +1,9 @@
+package com.exe.springdi1;
+
+public interface MessageCall {
+	
+	public void sayHello(String name) {
+		
+		
+	}
+}

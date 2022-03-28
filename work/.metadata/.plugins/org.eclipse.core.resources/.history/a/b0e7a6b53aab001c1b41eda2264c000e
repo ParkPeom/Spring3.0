@@ -1,0 +1,17 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" pageEncoding="UTF-8" %>
+<!-- pageEncoding="UTF-8" : 한글 표시 -->
+
+<html>
+<head>
+	<title>Home</title>
+</head>
+<body>
+<h1>
+	Hello world!  
+</h1>
+
+<!-- HomeController 에서 넘긴 serverTime를 읽어낸다. -->
+<P>  The time on the server is ${serverTime}. </P>
+</body>
+</html>

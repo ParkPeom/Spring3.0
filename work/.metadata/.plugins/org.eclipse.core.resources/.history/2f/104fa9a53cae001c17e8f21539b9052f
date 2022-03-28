@@ -1,0 +1,8 @@
+package com.exe.aop;
+
+public class MyBeforeAdvice {
+	
+	public void beforeMethodCall() {
+		
+	}
+}

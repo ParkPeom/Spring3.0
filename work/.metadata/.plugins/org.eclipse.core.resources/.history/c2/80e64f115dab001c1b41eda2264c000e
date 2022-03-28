@@ -1,0 +1,9 @@
+package com.exe.springdi4;
+
+public class MyMessageService {
+	
+	public String getMessage() {
+		
+		return "방가방가";
+	}
+}

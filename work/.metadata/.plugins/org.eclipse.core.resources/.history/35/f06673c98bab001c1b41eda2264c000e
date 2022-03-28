@@ -1,0 +1,63 @@
+package com.exe.springmvc_test;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.taglibs.standard.tag.el.fmt.RequestEncodingTag;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+
+@Controller("com.testcontroller")
+public class TestController {
+	
+	@RequestMapping(value="/test/param.action",method=RequestMethod.GET)
+	public String precessGetRequest() {
+		
+		return "paramResult";
+	}
+	
+	@RequestMapping(value="/test/param.action",method=RequestMethod.POST)
+	public String precessPostRequest() {
+		
+		System.out.println("POST방식 Request");
+		
+		return "paramResult";
+	}
+	
+	@RequestMapping(value="/test/param.action",method= {RequestMethod.POST,RequestMethod.GET})
+	public String precessGetPost() {
+		System.out.println("GET 과 POST방식");
+		
+		return "parsamResult"
+	}
+	
+	
+	@RequestMapping(value="/test/list.action" , method= {RequestMethod.GET,RequestMethod.POST})
+	
+	public String processGetPost(HttpServletRequest request, String name) {
+		System.out.println();
+		
+		if(request.getMethod().equalsIgnoreCase("GET")) {
+			
+			return "list1";
+		}
+	}
+
+	public String processPost(value="/love/test.action" , method=RequestMethod.POST)
+		public String processPostGetequest(String name,HttpServletRequest request,HttpServletResponse response) {
+		
+	
+	
+		System.out.println("GET/POST 방식 Request");
+	
+	
+		return "list";
+	
+	}
+}
+

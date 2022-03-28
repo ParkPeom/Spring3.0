@@ -1,0 +1,29 @@
+package com.exe.springdi4;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component("serviceconsumer")
+public class ServiceConsumer {
+	
+	@Autowired
+	MessageService ms;
+
+	@Autowired
+	TimeService ts;
+	
+	@Autowired
+	JobService js;
+	
+	public void consumerService() {
+		
+		String message = ms.getMessage();
+		System.out.println(message);
+		
+		String time = ts.getTimeString();
+		
+		js.getJob();
+		
+		
+	}
+}	

@@ -1,0 +1,12 @@
+package com.exe.aop;
+
+public class MyAroundAdvice {
+	
+	
+	public Object aroundMethodCall() {
+		
+		
+	}
+	
+	
+}

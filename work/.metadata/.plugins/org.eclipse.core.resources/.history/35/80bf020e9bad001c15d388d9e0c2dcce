@@ -1,0 +1,45 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String cp = request.getContextPath();
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd%22%3E
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div id="bbs">
+	<div id="bbs_title">
+	게시판(Spring3.0)
+	</div>
+	<div id="bbsArticle">
+		<div id="bbsArticle_header">
+			${dto.subject }
+		</div>
+		
+		<div class="bbsArticle_bottomLine">
+			<dl>
+				<dt>작성자</dt>
+				<dd>${dto.name }</dd>
+				<dt>줄수</dt>
+				<dd>${lineSu }</dd>
+			</dl>
+		</div>
+	
+	
+	
+		
+	</div>
+
+</div>
+
+
+
+
+
+
+</body>
+</html>

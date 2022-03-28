@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	https://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	https://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/aop
+	https://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	
+	<!-- aop 환경설정 똑같이 context처럼 해줌 -->
+	
+	<description>Example configuration to get you started.</description>
+
+	<context:component-scan base-package="com.exe.aop" />
+
+	<bean id="beforeAdvice" class="com.exe.aop.MyBeforeAdvice"/>
+	<bean id="afterAdvice" class="com.exe.aop.MyAfterAdvice"/>
+	<bean id="aroundAdvice" class="com.exe.aop.MyAroundAdvice"></bean>
+	<bean id="afterReturnAdvice" class="com.exe.aop.MyAfterReturnAdvice"/>
+	<bean id="afterThrowAdvice" class="com.exe.aop.MyAfterThrowAdvice"/>
+	<!-- 어노테이션으로 AOP만드는방법 -->
+	<!-- <aop:aspectj-autoproxy/> -->  <!-- 어노테이션을 쓰겠다. -->
+	<!-- 어드바이스 객체 생성 -->
+
+	<!-- 포인트컷 id : 어드바이스를 어디다가 지정할지 위치지정 -->
+	<!-- id 사용자 정의 , 위치정보 , 어다바이스를 짝수클래스,홀수클래스 메소드가 박씨시작 do끝나는메소드에 적용할지  -->
+	<!--  expression(조건) : com..aop 패키지에 어떠한 이름을 가진 * 클래스 .. 인수없는 적용 -->
+	<!-- execution(메소드 접근지정자)반환값 패키지.클래스.메소드명(인수) -->
+		
+	<!-- 특정 메소드가 실행되기전  beforeMethodCall 실행  -->
+	<aop:config>
+		<aop:aspect ref="beforeAdvice"> <!-- 애스팩트 :  어드바이스(동작)와 포인트컷(동작을적용하는조건)을 조합해서 
+											횡단 관심사에 대한 코드와 그것을 적용할 지점을 정의한 것 --> 
+			<aop:pointcut id ="beforePointcut"
+			 expression="execution(public void com..aop.*.*(..))" /> <!-- B자로 끝나느 클래스만 적용 -->
+			<aop:before method="beforeMethodCall" 
+			pointcut-ref="beforePointcut"/> <!-- 메소드가 실행되기 전 expression조건에 before에 적용한다.	 -->
+		</aop:aspect>
+	
+	<!-- aop:after : pointcut에 지정한 특정메소드가 실행되고 나서 실행  -->
+	<!-- execution(메소드 접근지정자 반환값 패키지.클래스.메소드명(인수) -->
+	<!-- execution(* com..aop.*.*(String) -->		
+	
+	<!-- 특정 메소드가 실행된후 afterMethodCall 실행  -->	
+		<aop:aspect ref="afterAdvice"> 
+			<aop:pointcut id="afterPointcut"
+			 expression="execution(public void com.exe.aop.*.*(..))"/>
+			<aop:after method="afterMethodCall"
+			 pointcut-ref="afterPointcut"/>
+		</aop:aspect>
+	
+	<!-- b 실행 하면서 리턴 주고 a실행해야함  -->
+		<aop:aspect ref="aroundAdvice">
+			<aop:pointcut id ="aroundPointcut"  
+			 expression="execution(public void com..aop.*.*(..))" />  
+			<aop:around method="aroundMethodCall" 
+			pointcut-ref="aroundPointcut"/> 
+		</aop:aspect>
+	
+	<!-- 무조건 메소드가 정상적 끝났을때  -->
+	<!--  expression 표현 execution 집행 -->
+		<aop:aspect ref="afterReturnAdvice">
+			<aop:pointcut id ="afterReturnPointcut"  
+			 expression="execution(public void com..aop.*.*(..))" />  
+			<aop:after-returning method="afterReturnMethodCall" 
+			pointcut-ref="afterReturnPointcut"/> 
+		</aop:aspect>
+	
+	<!-- 메소드가 오류가 났을때 실행 -->
+		<aop:aspect ref="afterThrowAdvice">
+			<aop:pointcut id ="afterThrowPointcut"  
+			 expression="execution(public void com..aop.*.*(..))" />  
+			<aop:after-throwing method="afterThrowMethodCall" 
+			pointcut-ref="afterThrowPointcut"/> 
+		</aop:aspect>
+	</aop:config>
+</beans>
+

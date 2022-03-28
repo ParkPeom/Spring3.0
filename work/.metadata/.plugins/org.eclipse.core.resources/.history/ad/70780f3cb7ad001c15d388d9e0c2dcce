@@ -1,0 +1,14 @@
+package snippet;
+
+public class Snippet {
+	public static void main(String[] args) {
+		mav.setViewName("bbs/article");//보낼곳
+				// 데이터넘김
+				mav.addObject("dto",dto);
+				mav.addObject("param",param);
+				mav.addObject("lineSu",lineSu);
+				mav.addObject("pageNum",pageNum);
+				return mav;
+	}
+}
+

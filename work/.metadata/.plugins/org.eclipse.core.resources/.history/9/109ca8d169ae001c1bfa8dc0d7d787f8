@@ -1,0 +1,186 @@
+package com.jdbc.springweb;
+
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.jdbc.dao.BoardDAO;
+import com.jdbc.dto.BoardDTO;
+import com.jdbc.util.MyUtil;
+
+@Controller
+public class BoardController {
+	
+	@Autowired
+	@Qualifier("boardDAO")
+	BoardDAO dao; // 의존성 주입
+	
+	@Autowired
+	MyUtil myutil; // 의존성주입해서 자동으로 가져옴
+	
+	@RequestMapping(value="/",method=RequestMethod.GET)
+	public String home() {
+		
+		return "index";
+		
+	}
+	
+	// get방식으로 왔을때
+	/*
+	@RequestMapping(value="/created.action",
+			method= {RequestMethod.GET,RequestMethod.POST})
+	public String created(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		return "bbs/created";
+	}
+	*/
+	
+	// Spring 고유의 ModelAndView
+	// method 안쓰면 기본이 get방식으로 간다
+	@RequestMapping(value="/created.action")
+	public ModelAndView created() {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("bbs/created");
+		
+		return mav;
+	}
+	
+	
+	// created.jsp 에서 글쓰기완료를 누르면 created_ok.action으로 이동
+	@RequestMapping(value="/created_ok.action",
+			method= {RequestMethod.GET,RequestMethod.POST})
+	public String created_ok(BoardDTO dto , HttpServletRequest request,HttpServletResponse response) throws Exception {
+
+		int maxNum = dao.getMaxNum();
+		
+		dto.setNum(maxNum + 1);
+		dto.setIpAddr(request.getRemoteAddr());
+		
+		dao.insertData(dto);
+		
+		return "redirect:/list.action";
+		
+	}
+	
+	@RequestMapping(value="/list.action",
+			method= {RequestMethod.GET,RequestMethod.POST})
+	public String list(HttpServletRequest request,HttpServletResponse response) throws Exception {
+
+		String cp = request.getContextPath();
+		
+		String pageNum = request.getParameter("pageNum");
+		
+		int currentPage = 1;
+		
+		if(pageNum!=null) // pageNum이있으면 현재 페이지로 설정 
+			currentPage = Integer.parseInt(pageNum);	
+		
+		String searchKey = request.getParameter("searchKey");
+		String searchValue = request.getParameter("searchValue");
+		
+		// 디코딩해서 받는다
+		// null값 찾기
+		
+		// 검색을안했으면
+		if(searchValue==null||searchValue.equals("")) {
+			searchKey = "subject";
+			searchValue= "";
+			
+		} else {
+			
+			// 검색을했으면 
+			if(request.getMethod().equalsIgnoreCase("GET")) {
+				
+				//디코더 시킨다.
+				// 값을 UTF-8로 인코딩
+				searchValue = URLDecoder.decode(searchValue,"UTF-8");
+			}
+		}
+				
+		// 검색한 데이터 전체 개수
+		int dataCount = dao.getDataCount(searchKey, searchValue);
+		
+		// 한화면에 표시할 데이터 개수
+		int numPerPage = 5;
+		int totalPage = MyUtil.getPageCount(numPerPage,dataCount);
+		
+		
+		if(currentPage>totalPage) {
+			currentPage = totalPage;
+		}
+		
+		//데이터베이스에서 가져올 시작과 끝위치 rnum
+		int start = (currentPage-1)*numPerPage+1;//(2-1)*5+1=6(rnum)
+		int end = currentPage*numPerPage; // 2 * 5 = 10(rnum)
+		
+		// 검색했으면 키값 벨류 start end
+		//데이터베이스에서 해당페이지를 가져온다
+		List<BoardDTO> lists = 
+				dao.getLists(start, end, searchKey, searchValue);
+		
+		// 리스트에서 설치키 설치벨류를 article 로 값 보내기 
+		
+		String param = "";
+		// null을 못찾을수있으니 조건 2번줌
+		if(searchValue!=null&&!searchValue.equals("")) {
+			
+			// 검색을했으면
+			param = "searchKey=" + searchKey;
+			param +="&searchValue=" + URLEncoder.encode(searchValue,"UTF-8");
+		}
+		
+		// 가상의 주소를 담는다.	
+		String listUrl = cp + "/list.do";
+		
+		if(!param.equals("")) {
+			// 널이아니면 검색을 했다.
+			// myUtil 뒤에 검색된 주소가 딸려간다.
+			// listUrl은 ?가 없으므로 붙인것
+			listUrl += "?" + param; 
+			
+			// ? 한번오고 뒤에는 &로 키와 값이 온다.
+		}
+		String pageIndexList =
+				myUtil.pageIndexList(currentPage, totalPage, listUrl);
+		
+		// 리스트를 클릭했을때 article로 넘어가는부분 
+		
+		// 글보기 주소를 만든다.
+		// 검색을 안했다면
+		
+		
+		// 현재페이지를 넘겨준다 ( 되돌아 올수있게 )
+		String articleUrl = cp + "/sboard/article.do?pageNum="+ currentPage;
+		
+		// 검색을 했다면 param 까지
+		// 뒤에 붙일거니까 &를 붙이는것이다.
+		if(!param.equals("")) {
+			
+			
+		// articleUrl 은 ?가 있어서 	
+		// 현재페이지를 넘겨준다 ( 되돌아 올수있게 - 키와 값 검색을했을때 되돌아올수있게 )
+			articleUrl += "&" + param;
+		}
+		
+		// 2번 사진
+		// 넘기는 방법
+		// 포워딩 페이지에 데이터 넘기기
+		
+		// list.jsp 에서 처리할수있게 포워딩해서 넘긴다.
+		req.setAttribute("lists", lists);
+		req.setAttribute("articleUrl", articleUrl);
+		req.setAttribute("pageIndexList", pageIndexList);
+		// dataCount는 null이아닐떄 pageIndexList를 띄우기위해
+		req.setAttribute("dataCount", dataCount); 
+		
+	}
+}

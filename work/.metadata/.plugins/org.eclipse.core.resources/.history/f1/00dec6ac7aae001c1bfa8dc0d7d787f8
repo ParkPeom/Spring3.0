@@ -1,0 +1,12 @@
+package com.exe.aop;
+
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+public class AopMain {
+
+	public static void main(String[] args) {
+		
+		
+		
+	}
+}

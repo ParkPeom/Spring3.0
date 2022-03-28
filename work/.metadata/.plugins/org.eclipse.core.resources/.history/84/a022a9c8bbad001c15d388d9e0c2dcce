@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardMapper">
+
+
+	<select id="maxNum" resultType="int">
+		select nvl(max(num),0) from board
+	</select>
+	
+	<insert id="insertData" parameterType="com.jdbc.dto.BoardDTO">
+		insert into board(num,name,pwd,email,subject,content,ipAddr,hitCount,created)
+		values (#{num},#{name},#{pwd},#{email},#{subject},#{content},#{ipAddr},0,sysdate)
+	</insert>
+	
+	<select id="getDataCount" parameterType="hashMap" resultType="int">
+	
+		
+	</select>
+	
+	
+</mapper>

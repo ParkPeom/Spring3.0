@@ -1,0 +1,61 @@
+package com.jdbc.springweb;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.jdbc.dao.BoardDAO;
+import com.jdbc.util.MyUtil;
+
+@Controller
+public class BoardController {
+	
+	@Autowired
+	@Qualifier("boardDAO")
+	BoardDAO dao; // 의존성 주입
+	
+	@Autowired
+	MyUtil myutil; // 의존성주입해서 자동으로 가져옴
+	
+	@RequestMapping(value="/",method=RequestMethod.GET)
+	public String home() {
+		
+		return "index";
+		
+	}
+	
+	// get방식으로 왔을때
+	/*
+	@RequestMapping(value="/created.action",
+			method= {RequestMethod.GET,RequestMethod.POST})
+	public String created(HttpServletRequest request,HttpServletResponse response) throws Exception {
+		return "bbs/created";
+	}
+	*/
+	
+	// Spring 고유의 ModelAndView
+	// method 안쓰면 기본이 get방식으로 간다
+	@RequestMapping(value="/created.action")
+	public ModelAndView created() {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("bbs/created");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="/created.action",
+			method= {RequestMethod.GET,RequestMethod.POST})
+	public String created_ok(BoardDTO dto , HttpServletRequest request,HttpServletResponse response) throws Exception {
+
+		int maxNum = dao.getMaxNum();
+		
+		dto.
+	}
+}
